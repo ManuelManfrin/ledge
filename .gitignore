@@ -1,0 +1,4 @@
+.build
+.swiftpm
+Bordi.app
+.DS_Store
