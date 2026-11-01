@@ -6,13 +6,11 @@ macOS 13 o successivo. Non è un'app del Mac App Store: legge la posizione del d
 
 ## Licenza
 
-Il sorgente è pubblico con la [Bordi Source License](LICENSE).
+[PolyForm Noncommercial 1.0.0](LICENSE).
 
-- Puoi usarlo, copiarlo e modificarlo.
-- Puoi distribuire la copia identica solo gratis.
-- Puoi venderlo solo se distribuisci una versione con modifiche tue e sostanziali. Cambiare nome, icona o numero di versione non basta.
+Chi riceve il programma può usarlo, modificarlo e distribuirlo solo per scopi non commerciali: uso personale, hobby, studio, ricerca, e organizzazioni come scuole, enti di beneficenza e pubblica amministrazione. Non può venderlo, né usarlo in un prodotto o un servizio fatto per ricavarci denaro, nemmeno dopo averlo modificato.
 
-Non è una licenza open source OSI. GitHub la mostra come licenza personalizzata.
+L'autore resta titolare del copyright e questa licenza non gli toglie la possibilità di concedere, a parte, un uso commerciale.
 
 ## Build
 
