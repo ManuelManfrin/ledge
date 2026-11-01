@@ -4,7 +4,7 @@ Nota di prodotto precedente. Lo stato attuale del codice, come si builda e dove 
 
 App solo per questo Mac. Fuori dal Mac App Store, perché la posizione del dito sul trackpad non è un'API pubblica.
 
-La bozza in `Sources/volume-bordo/main.swift` usa due dita sul bordo: destro per il volume, sinistro per la luminosità. Il doppio tap in alto a destra mette e toglie il mute. Il vincolo ⌘ è nel codice (`requireCommand`) ma è spento.
+La bozza in `Sources/Ledge/main.swift` usa due dita sul bordo: destro per il volume, sinistro per la luminosità. Il doppio tap in alto a destra mette e toglie il mute. Il vincolo ⌘ è nel codice (`requireCommand`) ma è spento.
 
 ## Come si leggono le dita
 
@@ -59,7 +59,7 @@ Dettagli che rendono la cosa usabile, e che la bozza fa solo in parte:
 ## Cosa è fragile
 
 - **Aggiornamenti di macOS.** Il framework privato può cambiare struct o nomi. La bozza fallisce in modo visibile (niente device, coordinate assurde) invece di indovinare.
-- **Permesso Monitoraggio input.** Senza, il callback non riceve contatti. Si dà a Terminale, oppure al binario `.build/debug/volume-bordo`, in Impostazioni di Sistema → Privacy e sicurezza → Monitoraggio input. Dopo averlo aggiunto va rilanciato.
+- **Permesso Monitoraggio input.** Senza, il callback non riceve contatti. Si dà a Terminale, oppure al binario `.build/debug/Ledge`, in Impostazioni di Sistema → Privacy e sicurezza → Monitoraggio input. Dopo averlo aggiunto va rilanciato.
 - **Stacco del cursore.** Può chiedere Accessibilità. All'uscita con Ctrl-C la bozza riattacca il cursore. Se il processo viene ucciso a forza mentre un gesto è attivo, il puntatore resta fermo: si sistema muovendo un mouse esterno o rilanciando la bozza, che all'avvio riattacca il cursore.
 - **Firma.** Per uso personale basta l'eseguibile locale. Un `.app` distribuito ad altri vuole Developer ID e notarizzazione, altrimenti Gatekeeper lo blocca.
 - **Display esterno.** La luminosità via API di sistema vale per il pannello del Mac. Un monitor esterno spesso ignora quel valore.
@@ -72,7 +72,7 @@ Dettagli che rendono la cosa usabile, e che la bozza fa solo in parte:
 
 ## La bozza
 
-`volume-bordo` resta in foreground nel terminale. Un dito solo muove il puntatore come sempre. Il controllo ⌘ è `requireCommand` in cima al sorgente: ora vale `false`.
+`Ledge` resta in foreground nel terminale. Un dito solo muove il puntatore come sempre. Il controllo ⌘ è `requireCommand` in cima al sorgente: ora vale `false`.
 
 1. Due dita sul bordo. Il dito più esterno sta nell'8% del bordo, l'altro può arrivare fino al 30% verso il centro. Destra è il volume, sinistra la luminosità.
 2. Per tutta la durata il puntatore resta fermo e lo scroll della finestra sotto non parte. Servono i permessi Monitoraggio input e Accessibilità, altrimenti il sistema continua a muovere puntatore e pagina.
@@ -85,14 +85,13 @@ Dettagli che rendono la cosa usabile, e che la bozza fa solo in parte:
 Il volume è quello dell'uscita audio predefinita, via CoreAudio. La luminosità è quella del pannello interno, via DisplayServices. La barra a 16 segmenti è `OSDManager`. Se una di queste API manca, il resto continua e nel terminale resta il log.
 
 ```bash
-cd /Users/manuel/Progetti/trackpad-bordi
 ./build-app.sh
-open Bordi.app
+open Ledge.app
 ```
 
-L'app sta solo nella barra dei menu, senza icona nel Dock. Il pannello ha pausa, richiesta di ⌘, aptica, avvio al login, larghezza dei bordi e sensibilità. `swift run volume-bordo` apre la stessa interfaccia da terminale.
+L'app sta solo nella barra dei menu, senza icona nel Dock. Il pannello ha pausa, richiesta di ⌘, aptica, avvio al login, larghezza dei bordi e sensibilità. `swift run Ledge` apre la stessa interfaccia da terminale.
 
-I permessi (Monitoraggio input e Accessibilità) vanno dati a `Bordi.app`, non al vecchio binario.
+I permessi (Monitoraggio input e Accessibilità) vanno dati a `Ledge.app`, non al vecchio binario.
 
 ## Dopo la bozza
 

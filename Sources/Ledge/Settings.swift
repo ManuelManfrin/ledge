@@ -8,8 +8,8 @@ final class AppModel: ObservableObject {
     @Published var note = ""
 }
 
-final class BordiSettings: ObservableObject {
-    static let shared = BordiSettings()
+final class LedgeSettings: ObservableObject {
+    static let shared = LedgeSettings()
 
     private let defaults = UserDefaults.standard
 
@@ -75,7 +75,7 @@ final class BordiSettings: ObservableObject {
             }
             loginError = nil
         } catch {
-            loginError = "L'avvio al login vale per Bordi.app, non per il binario da terminale."
+            loginError = "L'avvio al login vale per Ledge.app, non per il binario da terminale."
         }
         launchAtLogin = SMAppService.mainApp.status == .enabled
     }

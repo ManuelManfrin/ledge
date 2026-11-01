@@ -1,24 +1,23 @@
-# Handoff — Bordi
+# Handoff — Ledge
 
 App personale da barra dei menu. I bordi del trackpad cambiano volume, luminosità e riproduzione. Gli angoli lanciano azioni. Non va sul Mac App Store: legge la posizione del dito da un framework privato.
 
-Percorso: `/Users/manuel/Progetti/trackpad-bordi`. Bundle `it.manuel.bordi`, nome visibile Bordi, versione 0.1. Minimo macOS 13. `LSUIElement` è vero: niente icona nel Dock.
+Repository: `https://github.com/ManuelManfrin/ledge`. In locale la cartella può chiamarsi ancora `trackpad-bordi`. Bundle `it.manuel.ledge`, nome visibile Ledge, versione 0.1. Minimo macOS 13. `LSUIElement` è vero: niente icona nel Dock.
 
 `COSA-SI-PUO-FARE.md` è la nota di prodotto da cui è partita la bozza. Questo file descrive il codice com'è ora.
 
 ## Avvio
 
 ```bash
-cd /Users/manuel/Progetti/trackpad-bordi
 ./build-app.sh
-open Bordi.app
+open Ledge.app
 ```
 
-`build-app.sh` fa `swift build -c release`, copia il binario `volume-bordo` in `Bordi.app/Contents/MacOS/Bordi`, ci mette `Support/Info.plist` e firma ad hoc (`codesign --sign -`). `swift run volume-bordo` apre la stessa interfaccia, ma è un altro processo: i permessi dati all'app non valgono per lui, e l'avvio al login funziona solo sul bundle.
+`build-app.sh` fa `swift build -c release`, copia il binario `Ledge` in `Ledge.app/Contents/MacOS/Ledge`, ci mette `Support/Info.plist` e firma ad hoc (`codesign --sign -`). `swift run Ledge` apre la stessa interfaccia, ma è un altro processo: i permessi dati all'app non valgono per lui, e l'avvio al login funziona solo sul bundle.
 
-Se l'app è già aperta, `open` non sostituisce il processo. Dopo una build va chiusa dal pannello (Esci) oppure con `pkill -x Bordi`, poi riaperta.
+Se l'app è già aperta, `open` non sostituisce il processo. Dopo una build va chiusa dal pannello (Esci) oppure con `pkill -x Ledge`, poi riaperta.
 
-Permessi, in Impostazioni di Sistema → Privacy e sicurezza, dati a `Bordi.app`:
+Permessi, in Impostazioni di Sistema → Privacy e sicurezza, dati a `Ledge.app`:
 
 - **Monitoraggio input.** Senza, il callback del trackpad non riceve contatti. Il pannello dice che nessun trackpad è in ascolto.
 - **Accessibilità.** Senza, l'event tap non nasce. Volume e luminosità cambiano lo stesso, ma il puntatore e lo scroll della finestra sotto possono muoversi durante il gesto.
@@ -29,15 +28,15 @@ Un aggiornamento di macOS o una nuova firma può far cadere i permessi. Vanno ri
 
 | File | Ruolo |
 | --- | --- |
-| `Package.swift` | Un solo target eseguibile, `volume-bordo`. Framework: AppKit, SwiftUI, CoreAudio, IOKit, ServiceManagement. |
-| `Sources/volume-bordo/main.swift` | Trackpad, volume, luminosità, barra di sistema, aptica, gesto. |
-| `Sources/volume-bordo/CornerActions.swift` | Azioni degli angoli e comandi Now Playing. |
-| `Sources/volume-bordo/Settings.swift` | Impostazioni, UserDefaults, enum di angoli e azioni. |
-| `Sources/volume-bordo/PopoverView.swift` | Pannello SwiftUI, due tab. |
-| `Sources/volume-bordo/AppMain.swift` | `NSApplication`, icona in menu bar, popover. |
+| `Package.swift` | Un solo target eseguibile, `Ledge`. Framework: AppKit, SwiftUI, CoreAudio, IOKit, ServiceManagement. |
+| `Sources/Ledge/main.swift` | Trackpad, volume, luminosità, barra di sistema, aptica, gesto. |
+| `Sources/Ledge/CornerActions.swift` | Azioni degli angoli e comandi Now Playing. |
+| `Sources/Ledge/Settings.swift` | Impostazioni, UserDefaults, enum di angoli e azioni. |
+| `Sources/Ledge/PopoverView.swift` | Pannello SwiftUI, due tab. |
+| `Sources/Ledge/AppMain.swift` | `NSApplication`, icona in menu bar, popover. |
 | `Support/Info.plist` | Identità del bundle. |
-| `build-app.sh` | Produce `Bordi.app`. |
-| `Bordi.app` | Build locale già firmata. Non è sorgente. |
+| `build-app.sh` | Produce `Ledge.app`. |
+| `Ledge.app` | Build locale già firmata. Non è sorgente. |
 
 `AppDelegate` è trattenuto da una variabile globale in `main.swift` perché `NSApplication.delegate` è weak. All'avvio riattacca il cursore (`CGAssociateMouseAndMouseCursorPosition(1)`), così un processo ucciso a metà gesto non lascia il puntatore fermo.
 
@@ -79,12 +78,12 @@ Durante una barra a due dita il puntatore si stacca (`CGAssociateMouseAndMouseCu
 
 Popover transiente dall'icona del trackpad. Si apre sul mouse up, così il click fuori non lo riapre subito. Due tab.
 
-**Bordi.** Disegno del trackpad (arancio luminosità, blu volume, verde media). Lo spessore disegnato segue gli slider. Se negli angoli prevalgono i lati, le fasce laterali vengono disegnate sopra quella bassa.
+**Tab Bordi.** Disegno del trackpad (arancio luminosità, blu volume, verde media). Lo spessore disegnato segue gli slider. Se negli angoli prevalgono i lati, le fasce laterali vengono disegnate sopra quella bassa.
 
 - Gesti attivi. Se spento, `handle` chiude ogni gesto.
 - Richiedi ⌘.
 - Feedback aptico. Default spento.
-- Apri al login, via `SMAppService.mainApp`. Fallisce se il processo non è `Bordi.app`.
+- Apri al login, via `SMAppService.mainApp`. Fallisce se il processo non è `Ledge.app`.
 - Bordo laterale e seconda dita dei lati.
 - Spessore in basso e seconda dita in basso. Indipendenti dai lati.
 - Priorità degli angoli in basso.
@@ -129,7 +128,7 @@ La scala di waveform è ancora in `ladder`: 4, 1, 15, 5, 6, 2, 16, dal tocco leg
 
 ## Impostazioni salvate
 
-`UserDefaults.standard`. Dentro `Bordi.app` il dominio è `it.manuel.bordi`.
+`UserDefaults.standard`. Dentro `Ledge.app` il dominio è `it.manuel.ledge`.
 
 | Chiave | Default |
 | --- | --- |
@@ -160,7 +159,7 @@ La scala di waveform è ancora in `ladder`: 4, 1, 15, 5, 6, 2, 16, dal tocco leg
 - La luminosità non pilota un monitor esterno.
 - "Mostra la scrivania" di riserva è F11, non la scorciatoia che l'utente ha cambiato.
 - Lo swipe a sinistra manda il comando previous della sessione. L'app decide se ricominciare il brano o passare al precedente. È lo stesso comportamento del tasto nel Centro di Controllo.
-- Se il Centro di Controllo non mostra il video, non lo vede neanche Bordi.
+- Se il Centro di Controllo non mostra il video, non lo vede neanche Ledge.
 - Non c'è bordo superiore, né seek continuo, né menu extra oltre al popover.
 - Nessun test automatico. La verifica è sul trackpad: due dita sul bordo, doppio tap, e il puntatore che torna al rilascio.
 

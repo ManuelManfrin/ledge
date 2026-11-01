@@ -5,15 +5,15 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>it</string>
 	<key>CFBundleExecutable</key>
-	<string>Bordi</string>
+	<string>Ledge</string>
 	<key>CFBundleIdentifier</key>
-	<string>it.manuel.bordi</string>
+	<string>it.manuel.ledge</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Bordi</string>
+	<string>Ledge</string>
 	<key>CFBundleDisplayName</key>
-	<string>Bordi</string>
+	<string>Ledge</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

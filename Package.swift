@@ -2,11 +2,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "trackpad-bordi",
+    name: "ledge",
     platforms: [.macOS(.v13)],
     targets: [
         .executableTarget(
-            name: "volume-bordo",
+            name: "Ledge",
             linkerSettings: [
                 .linkedFramework("AppKit"),
                 .linkedFramework("SwiftUI"),

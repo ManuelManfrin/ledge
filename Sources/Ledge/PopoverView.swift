@@ -9,7 +9,7 @@ private enum PanelTab: String, CaseIterable, Identifiable {
 }
 
 struct PopoverRoot: View {
-    @ObservedObject private var settings = BordiSettings.shared
+    @ObservedObject private var settings = LedgeSettings.shared
     @ObservedObject private var model = AppModel.shared
     @State private var tab: PanelTab = .edges
 
@@ -131,7 +131,7 @@ struct PopoverRoot: View {
                 .frame(width: 36, height: 36)
                 .overlay(TrackpadMark().frame(width: 22, height: 16))
             VStack(alignment: .leading, spacing: 2) {
-                Text("Bordi")
+                Text("Ledge")
                     .font(.system(size: 17, weight: .semibold))
                 Text(settings.enabled ? "Lati per i livelli, basso per i media" : "In pausa")
                     .font(.system(size: 12))

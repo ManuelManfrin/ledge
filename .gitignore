@@ -1,4 +1,5 @@
 .build
 .swiftpm
 Bordi.app
+Ledge.app
 .DS_Store

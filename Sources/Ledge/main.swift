@@ -1,7 +1,6 @@
-// Bordi. Uso personale. Il comportamento attuale è in HANDOFF.md.
+// Ledge. Uso personale. Il comportamento attuale è in HANDOFF.md.
 //
-//   cd /Users/manuel/Progetti/trackpad-bordi
-//   ./build-app.sh && open Bordi.app
+//   ./build-app.sh && open Ledge.app
 
 import AppKit
 import CoreAudio
@@ -11,13 +10,13 @@ import Foundation
 import IOKit
 
 // Valori letti dalle impostazioni, così la barra dei menu li cambia subito.
-var edgeWidth: Float { Float(BordiSettings.shared.edgeWidth) }
-var twoFingerEdge: Float { Float(BordiSettings.shared.twoFingerEdge) }
-var bottomEdge: Float { Float(BordiSettings.shared.bottomEdge) }
-var bottomReach: Float { Float(BordiSettings.shared.bottomReach) }
-var requireCommand: Bool { BordiSettings.shared.requireCommand }
-var hapticsEnabled: Bool { BordiSettings.shared.hapticsEnabled }
-var sensitivity: Float { Float(BordiSettings.shared.sensitivity) }
+var edgeWidth: Float { Float(LedgeSettings.shared.edgeWidth) }
+var twoFingerEdge: Float { Float(LedgeSettings.shared.twoFingerEdge) }
+var bottomEdge: Float { Float(LedgeSettings.shared.bottomEdge) }
+var bottomReach: Float { Float(LedgeSettings.shared.bottomReach) }
+var requireCommand: Bool { LedgeSettings.shared.requireCommand }
+var hapticsEnabled: Bool { LedgeSettings.shared.hapticsEnabled }
+var sensitivity: Float { Float(LedgeSettings.shared.sensitivity) }
 let armDistance: Float = 0.025
 let mediaSwipeDistance: Float = 0.08
 let tapTravel: Float = 0.02
@@ -478,7 +477,7 @@ final class Engine: @unchecked Sendable {
     var savedCursor = CGPoint.zero
 
     func handle(_ fingers: [Finger], time: Double) {
-        if !BordiSettings.shared.enabled || (requireCommand && !commandDown()) {
+        if !LedgeSettings.shared.enabled || (requireCommand && !commandDown()) {
             dropGesture()
             return
         }
@@ -539,7 +538,7 @@ final class Engine: @unchecked Sendable {
         let onBottom = minY <= bottomEdge && maxY <= bottomReach
         let onRight = maxX >= 1 - edgeWidth && minX >= 1 - twoFingerEdge
         let onLeft = minX <= edgeWidth && maxX <= twoFingerEdge
-        let sidesOwnCorners = BordiSettings.shared.cornerPriority == .sides
+        let sidesOwnCorners = LedgeSettings.shared.cornerPriority == .sides
         let bottomOwns = onBottom && !(sidesOwnCorners && (onLeft || onRight))
         if bottomOwns {
             slide = nil
@@ -641,7 +640,7 @@ final class Engine: @unchecked Sendable {
         contact = nil
         let duration = time - current.time
         let cornerAction = current.corner.flatMap { corner -> CornerAction? in
-            let action = BordiSettings.shared.action(for: corner)
+            let action = LedgeSettings.shared.action(for: corner)
             return action == .none ? nil : action
         }
         let target: TapTarget? = {
@@ -663,8 +662,8 @@ final class Engine: @unchecked Sendable {
             switch target {
             case .corner(let corner):
                 CornerActions.perform(
-                    BordiSettings.shared.action(for: corner),
-                    appPath: BordiSettings.shared.appPath(for: corner)
+                    LedgeSettings.shared.action(for: corner),
+                    appPath: LedgeSettings.shared.appPath(for: corner)
                 )
             case .bottom:
                 CornerActions.playPause()

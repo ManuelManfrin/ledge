@@ -17,7 +17,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 model.note = "Manca il permesso Accessibilità: durante lo scroll il puntatore può ancora spostarsi."
             }
         } else {
-            model.note = "Nessun trackpad in ascolto. Abilita Bordi in Monitoraggio input e riaprila."
+            model.note = "Nessun trackpad in ascolto. Abilita Ledge in Monitoraggio input e riaprila."
         }
 
         let host = NSHostingController(rootView: PopoverRoot())

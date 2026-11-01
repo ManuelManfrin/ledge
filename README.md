@@ -1,4 +1,4 @@
-# Bordi
+# Ledge
 
 App per macOS. I bordi del trackpad cambiano volume, luminosità e riproduzione. Gli angoli lanciano azioni. Sta nella barra dei menu, senza icona nel Dock.
 
@@ -18,16 +18,16 @@ Serve Xcode o i Command Line Tools di Swift.
 
 ```bash
 ./build-app.sh
-open Bordi.app
+open Ledge.app
 ```
 
-Lo script compila in release, crea `Bordi.app` e lo firma in locale (`codesign --sign -`). `Bordi.app` è un artefatto di build e non sta nel repository.
+Lo script compila in release, crea `Ledge.app` e lo firma in locale (`codesign --sign -`). `Ledge.app` è un artefatto di build e non sta nel repository.
 
 Se l'app è già aperta, chiudila dal pannello (Esci) e riapri il bundle nuovo.
 
 ## Permessi
 
-In Impostazioni di Sistema → Privacy e sicurezza, dati a `Bordi.app`:
+In Impostazioni di Sistema → Privacy e sicurezza, dati a `Ledge.app`:
 
 - **Monitoraggio input.** Senza, il trackpad non manda i contatti.
 - **Accessibilità.** Senza, durante il gesto il puntatore e lo scroll della finestra sotto possono muoversi.
